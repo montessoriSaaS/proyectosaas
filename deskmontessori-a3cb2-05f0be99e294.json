@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "deskmontessori-a3cb2",
+  "private_key_id": "05f0be99e29447847c7e419b1a97c96c4515918a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC4eUi1WllrKxr1\nOMfMpu33+5q2OdzVnTTb60GJnf3qBZLMdfX6khjp63lusgP67DWw13Ur9dvTRfAA\nP7LQPdrePyDUYK8rtruPaGIxws7iF+LmUMgqLV3lsYYp6k4TxMAvnwT76IrWAyU+\nIbl9pXUzIupjSO8C5GMJolGQe87hs3eK1GffdW5u/0caQJ4+kTYKcqWNpHOuD4OA\nRNzPTLn6z2PKxurUOBH6QyR5fmHQ8zea1Ja9TfpIFYCoZHS/fOE4mcKqRArFm9f/\n9DRaJRhDsgRQ7r+XY/1gkyvYukObitSZ5idKwWdNeuS6w4+3PRqNtvJ3jV/bfFCV\nfau90XDRAgMBAAECggEAQkKuLxXI0ImnITXH7mZ3S3+ATrvx6niRJ/0UiU3Kimh+\nFhq4w8v+TudZsr0WWObHUkHRwHyK/RQ95Jj8rXfKSdH7BM3FnboBHL2tp5oFnYhe\n48NYYm3xMDPXsO6MJOWi8nf33lPkqoJuuiZ67fqkYj3EWu0zjKJkQG2hRnhyEvc7\nd66JipaEddaeB5QKFh4o9dRhiNb5iQAyA+kbpvLJI8X4Hez7FMHYHRUpzBTrbMuY\nVUn+GgTCD8fepd/gvLJKJ+C41W4TLz4eZQSqY7Hyahzf2vPQA1mFP4NEtaXFOkin\n3I33//fVUG0d8K2tCF7YY7MX0cwTMKJta+EC7NZVkQKBgQDZd1VfYBbcuRBIO9RB\nVR5/bemBa7HhbTa2Cmznw97xOcu60j7gYJqembEFK/Ehxv2havlR4j+ZzvyTG1Jx\nbc2jxIiUdZeQoezVR69dNQabs3paZuJM49/21s1DGNfF7871PCSG7WfBinxfYNdX\nEUORy3xXQYzOm+GmCsnLna88YwKBgQDZKVrqHzua7cxTwf65SImPopx2VctlJMUx\n0I0vSoV9sBoxx+LQtSj9lvnW55nInJEAXKL8bWdr3UICaYvqj6PEt1S6mgqmGp8S\nWIjhqw2hBBw8r8L8sZXEaALZ0aZBSqn4c+vyQUAvkXbcYEcpfOljJYvIh1liby0Q\n9dFWmb9COwKBgQC6MtUkbq/kmYh5cNDSh8EvNrsCl2WdMNfxkoehAjL3tJbeBXrU\nv6JkPhA172PtmeY8uc1z8Ran6XSVuIUknfG/UV3oT69QpXSVQWXDls1rr4cJtKH7\nV/nB7jWeR70ou6YmkDJuXQPD0YGgYNjAsgV65hI22+dmWE4iz4XtE7yhJQKBgAuH\n/qPf9LJNXkQ0UOpVx7gw0k4WUC6WvUHf6R9RvbTm3P03t/uNIxgUJEAdHDVi2vBB\n+wWcaZl4rkCiiiNybSfM9FrUQyx+zWOT//C7vIWISleOnbP9Wg6L11rpnwJojI38\n2dKLVHUyLDWXhy/Uyi/RlpKXXU+0x5fW9b67e0RxAoGBAKk+CqmfQvF1uMg+qQvE\nB20lQLoG9VjrrdgtuG1pFAFG4rXdaS2oKtOsbK4+jmErq80Br6mGea8C8UlfGTTh\nXy5PrxcECQzUlBlVmVJvCMgsnGMOJtNvclYtRQ4QPuh9w7nEc4WdJRWfoRAh1bsX\nk3fNYIYd9kkp/jrKhJhHvHx0\n-----END PRIVATE KEY-----\n",
+  "client_email": "tenants@deskmontessori-a3cb2.iam.gserviceaccount.com",
+  "client_id": "106651032520499958667",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tenants%40deskmontessori-a3cb2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
