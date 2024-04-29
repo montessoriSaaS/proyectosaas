@@ -1,9 +1,6 @@
+// Importar los servicios que necesitas de Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut
-} from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAEy6y6RQvOsZWW1OHQMxwT7dLZvIzMV3I",
@@ -12,11 +9,12 @@ const firebaseConfig = {
   storageBucket: "deskmontessori-a3cb2.appspot.com",
   messagingSenderId: "325693574028",
   appId: "1:325693574028:web:272bfa54294c335d6d64a9",
-  measurementId: "G-RLJVEHLMY5"
+  measurementId: "G-RLJVEHLMY5",
 };
 
-// Initialize Firebase
+// Inicialización de Firebase App
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
@@ -27,16 +25,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, username, password)
-      .then((userCredential) => {
-        console.log("Inicio de sesión exitoso", userCredential.user);
-        // Redirige a la página principal
-        window.location.href = "dashboard.html";
+    // Establecer la persistencia del usuario
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        // Autenticar al usuario
+        signInWithEmailAndPassword(auth, username, password)
+          .then((userCredential) => {
+            // Usuario autenticado correctamente
+            console.log("Usuario autenticado:", userCredential.user);
+            auth.updateCurrentUser(userCredential.user);
+            // Esperar un momento antes de acceder a currentUser
+            setTimeout(() => {
+              console.log("Usuario actual después de iniciar sesión:", auth.currentUser);
+            }, 1000); // Esperar 1 segundo antes de acceder a currentUser
+            window.location.href = "dashboard.html";
+          })
+          .catch((error) => {
+            console.error("Error al autenticar:", error.message);
+          });
       })
       .catch((error) => {
-        console.error("Error en el inicio de sesión: ", error.message);
-        alert("Error en el inicio de sesión: Usuario o contraseña incorrectos");
+        console.error("Error al establecer la persistencia:", error.message);
       });
   });
 });
