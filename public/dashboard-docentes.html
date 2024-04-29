@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alumnos</title>
+    <link rel="stylesheet" href="docentes.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+    <script type="module" src="docentes.js" defer></script>
+    <script type="module" src="logout.js" defer></script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h3>Dashboard</h3>
+      <a href="dashboard.html">Inicio</a>
+      <a href="alumnos.html">Estudiantes</a>
+      <a href="#">Docentes</a>
+      <a href="#">Materias</a>
+      <a href="signInTenant.html">Usuarios</a>
+      <a href="index.html" onclick="logout()">Cerrar sesión</a>
+    </div>
+
+    <div class="content">
+      <div class="header">
+        <h1>Gestión de Docentes</h1>
+      </div>
+      <form id="docentesForm">
+        <input type="hidden" id="docentestId" value="" />
+        <input
+          type="text"
+          id="docentes"
+          placeholder="Nombre del Docente"
+          required
+        />
+        <button type="submit">Guardar</button>
+      </form>
+
+      <!-- Este botón podría tener un campo para introducir el ID del alumno a eliminar -->
+      <input
+        type="text"
+        id="deletedocentesId"
+        placeholder="ID del Docente a eliminar"
+      />
+      <button id="deleteButton">Eliminar Docente</button>
+      <div>
+        <a href="dashboard.html"><button>Regresar a Inicio</button></a>
+      </div>
+    </div>
+    <div class="footer">© 2024 Dashboard Template</div>
+  </body>
+</html>
