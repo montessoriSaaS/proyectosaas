@@ -1,13 +1,11 @@
 // Importar los servicios que necesitas de Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+import { getFirestore, doc, setDoc  } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
-import {
-  getFunctions,
-  httpsCallable,
-} from "https://www.gstatic.com/firebasejs/9.1.0/firebase-functions.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -23,22 +21,28 @@ const firebaseConfig = {
 // Inicialización de Firebase App
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const functions = getFunctions(app);
+const db = getFirestore(app);
 
 document
   .getElementById("userRegistrationForm")
-  .addEventListener("submit", function (event) {
+  .addEventListener("submit", async function (event) {
     event.preventDefault();
 
+    // Mover la obtención del valor del correo electrónico aquí
     const userEmail = document.getElementById("userEmail").value;
     const userPassword = document.getElementById("userPassword").value;
 
     // Suponer que el admin está autenticado y su email es accesible
     const adminEmail = auth.currentUser ? auth.currentUser.email : null;
-    if (!adminEmail) {
-      alert("Administrador no autenticado o email no disponible");
-      return; // Detener ejecución si no hay admin autenticado
-    }
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("Usuario autenticado:", user);
+        console.log("Email del usuario:", user.email);
+        const adminEmail = auth.currentUser ? auth.currentUser.email : null;
+      } else {
+        console.log("No hay usuario autenticado.");
+      }
+    });
 
     const adminDomain = adminEmail.split("@")[1].split(".")[0];
     const userDomain = userEmail.split("@")[1].split(".")[0];
@@ -48,19 +52,16 @@ document
       createUserWithEmailAndPassword(auth, userEmail, userPassword)
         .then((userCredential) => {
           const user = userCredential.user;
+          user.tenantId = userDomain;
+          const userTenantId = user.tenantId;
+          setDoc(doc(db, "users", user.uid), {
+            tenantId: userTenantId,
+            email: userEmail
+          });
+          alert(
+            "Se agregó el usuario " + userEmail + " al dominio " + userTenantId
+          );
           console.log("Usuario registrado correctamente:", userEmail);
-          console.log(userCredential);
-          console.log(user);
-          console.log(userDomain, user.tenantId);
-          // Llamar a la función invocable para añadir custom claims
-          const addTenantClaim = httpsCallable(functions, "addTenantClaim");
-          addTenantClaim({ email: userEmail, uid: user.uid, tenantId: userDomain })
-            .then((result) => {
-              console.log("Tenant ID set:", result.data);
-            })
-            .catch((error) => {
-              console.error("Error setting tenant ID:", error.message);
-            });
         })
         .catch((error) => {
           // Manejo específico del error cuando el email ya está registrado
@@ -79,3 +80,14 @@ document
       );
     }
   });
+
+const togglePasswordButton = document.getElementById("togglePassword");
+const passwordInput = document.getElementById("userPassword");
+
+togglePasswordButton.addEventListener("click", () => {
+  const type =
+    passwordInput.getAttribute("type") === "password" ? "text" : "password";
+  passwordInput.setAttribute("type", type);
+  togglePasswordButton.textContent =
+    type === "password" ? "Mostrar contraseña" : "Ocultar contraseña";
+});

@@ -17,12 +17,23 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+console.log("auth:", auth);
+console.log("auth.currentUser:", auth.currentUser);
+console.log("auth.userCredentials", auth.userCredentials);
 
 function logout() {
-    console.log("Entrando a la función logout");
+  console.log("Entrando a la función logout");
+  // Confirmar el logout antes de continuar
   const auth = getAuth();
   console.log("auth: ", auth);
   console.log("auth.currentUser: ", auth.currentUser);
+  // Confirmar el logout antes de continuar
+  const confirmed = confirm("¿Estás seguro de que quieres cerrar sesión?");
+  if (!confirmed) {
+    return; // Cancelar logout si el usuario no confirma
+  }
   signOut(auth)
     .then(() => {
       // Redirige al usuario al formulario de inicio de sesión

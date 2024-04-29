@@ -32,69 +32,12 @@ const admin = require("firebase-admin/app");
 // const auth = require("firebase-admin/auth");
 admin.initializeApp();
 
-exports.getTenants = functions.https.onRequest(async (req, res) => {
-  try {
-    const tenantId = req.query.tenantId;
-    console.log(tenantId);
-    // Obtener el ID del inquilino desde la consulta URL
-
-    if (!tenantId) {
-      res.status(400).send("ID del inquilino faltante en la consulta URL");
-      return;
-    }
-
-    const tenantManager = admin.auth().tenantManager();
-    // const tenantAuth = tenantManager.authForTenant(tenantId);
-
-    const tenant = await tenantManager.getTenant(tenantId);
-    res.status(200).json({tenant: tenant.toJSON()});
-    console.log(tenant.toJSON());
-  } catch (error) {
-    console.error("Error al obtener información del inquilino:", error);
-    res.status(500).send("Error al obtener información del inquilino");
-  }
-});
-
-exports.createTenant = functions.https.onRequest(async (req, res) => {
-  try {
-    const {displayName} = req.body;
-
-    const tenantConfig = {
-      displayName,
-      emailSignInConfig: {
-        signInOption: "EMAIL_PASSWORD",
-        allowPasswordSignup: true,
-        requireDisplayName: true,
-      },
-    };
-
-    const tenant = await admin
-        .auth()
-        .tenantManager()
-        .createTenant(tenantConfig)
-        .then((createdTenant) => {
-          console.log(createdTenant.toJSON());
-        });
-    res.status(201).json({tenant});
-  } catch (error) {
-    console.error("Error al crear el inquilino:", error);
-    res.status(500).send("Error al crear el inquilino");
-  }
-});
-
-exports.addTenantClaim = functions.https.onCall(async (data, context) => {
-  // Verificar autenticación
-  if (!context.auth) {
-    throw new functions.https
-        .HttpsError("unauthenticated",
-            "The function must be called while authenticated.");
-  }
-
-  const userEmail = data.email;
+exports.addDomainOnUserCreation =
+functions.auth.user().onCreate(async (user) => {
+  const userEmail = user.email;
   if (!userEmail) {
-    throw new functions.https
-        .HttpsError("invalid-argument",
-            "The function must be called with an email argument.");
+    console.error("El usuario no tiene un correo electrónico válido.");
+    return null;
   }
 
   const emailDomain = userEmail.split("@")[1].split(".")[0];
@@ -105,30 +48,31 @@ exports.addTenantClaim = functions.https.onCall(async (data, context) => {
     const doc = await tenantRef.get();
 
     if (!doc.exists) {
-      throw new functions.https
-          .HttpsError("not-found",
-              "Tenant mapping not found.");
-    }
+      // Si el dominio no existe,
+      // agrega un documento con el dominio como ID
+      await tenantRef.set({
+        domain: emailDomain,
+        created_at: admin.firestore.FieldValue.serverTimestamp(),
+      });
 
-    // const tenantId = doc.data().tenantId;
-    // await admin.auth()
-    //    .setCustomUserClaims(context.auth.uid, {tenant_id: tenantId});
-    // return {tenantId: tenantId};
-    return admin.auth().setCustomUserClaims(data.email, data.uid, {tenantId: data.tenantId})
-        .then(() => {
-          return {message: `Tenant ID ${data.tenantId} 
-          set for user ${data.uid}`};
-        })
-        .catch((error) => {
-          console.error("Failed to set custom claims:", error);
-          throw new functions.https
-              .HttpsError("internal", "Unable to set custom claims.");
-        });
+      console.log("Se agregó el dominio " +
+      emailDomain + " a tenantMappings.");
+
+      // Aquí puedes realizar otras acciones
+      // que desees al crear un nuevo usuario
+      console.log("Se ha creado un nuevo usuario:", userEmail);
+
+      return null; // La función se ejecutó correctamente
+    } else {
+      console.log("El dominio " + emailDomain +
+      " ya existe en tenantMappings.");
+      return null;
+      // La función se ejecutó correctamente
+    }
   } catch (error) {
-    console.error("Error setting custom claims:", error);
-    throw new functions.https
-        .HttpsError("internal",
-            "Unable to set custom claims.", error);
+    console.error("Error al procesar la creación de usuario:", error);
+    throw new Error("Error al procesar la creación de usuario: " +
+    error.message);
   }
 });
 
