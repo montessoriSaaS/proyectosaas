@@ -1,17 +1,49 @@
-/* Estilos Generales */
+/* Contenido de dashboard.css */
 body {
-  font-family: Arial, sans-serif; /* Preferencia de Arial sobre Segoe UI para consistencia */
-  background-color: #f4f4f4;
   margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.sidebar {
+  background-color: #333;
+  color: white;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+.sidebar a {
+  color: white;
+  padding: 10px 15px;
+  display: block;
+  text-decoration: none;
+  transition: background 0.3s, padding-left 0.3s;
+}
+.sidebar a:hover {
+  background-color: #555;
+  padding-left: 25px;
+}
+.content {
+  margin-left: 250px;
   padding: 20px;
+  overflow: hidden;
+}
+.header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+.footer {
+  background-color: #f0f0f0;
   color: #333;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 250px);
+  margin-left: 250px;
 }
-
-.main-container {
-  padding: 20px;
-}
-
-/* Formularios y Botones */
 form {
   background: #ffffff;
   padding: 20px;
@@ -20,7 +52,6 @@ form {
   max-width: 400px;
   margin: 2rem auto;
 }
-
 input[type="text"],
 input[type="number"],
 input[type="email"],
@@ -32,13 +63,11 @@ input[type="password"] {
   border: 2px solid #ddd;
   border-radius: 4px;
 }
-
 input[type="text"]:focus,
 input[type="number"]:focus {
   border-color: #0056b3;
   outline: none;
 }
-
 button {
   background-color: #0056b3;
   color: white;
@@ -52,71 +81,15 @@ button {
   cursor: pointer;
   border-radius: 5px;
 }
-
 button:hover {
   background-color: #004494;
 }
-
 button:active {
   background-color: #003073;
 }
-
 button:focus {
   outline: none;
 }
-
-/* Sidebar */
-.sidebar {
-  background-color: #333;
-  color: white;
-  width: 250px;
-  height: 100vh;
-  position: fixed;
-  padding: 20px 0;
-  overflow-y: auto;
-  margin: 0;
-}
-
-.sidebar a {
-  color: white;
-  padding: 10px 15px;
-  display: block;
-  text-decoration: none;
-  transition: background 0.3s, padding-left 0.3s;
-}
-
-.sidebar a:hover {
-  background-color: #555;
-  padding-left: 25px;
-}
-
-/* Contenido y Cabecera */
-.content {
-  margin-left: 250px;
-  padding: 20px;
-  overflow: hidden;
-}
-
-.header {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  margin-bottom: 20px;
-}
-
-/* Footer */
-.footer {
-  background-color: #f0f0f0;
-  color: #333;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: calc(100% - 250px);
-  margin-left: 250px;
-}
-
-/* Responsive Design */
 @media (max-width: 600px) {
   .sidebar {
     width: 100%;
