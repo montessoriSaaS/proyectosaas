@@ -49,3 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 });
+
+const addAdminRole = firebase.functions().httpsCallable('addAdminRole');
+
+addAdminRole({ uid: 'FTqipjzNvaUFuECW25uETrMcNVj2' })
+    .then(result => {
+        console.log("Admin:", result.data.message);
+    })
+    .catch(error => {
+        console.error('Error al asignar rol de administrador:', error);
+    });

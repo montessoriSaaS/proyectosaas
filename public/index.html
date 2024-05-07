@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Welcome</title>
     <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="index.css" />
     <script type="module" src="index.js" defer></script>
     <script type="module" src="logout.js" defer></script>
 
@@ -76,21 +77,33 @@
       const app = initializeApp(firebaseConfig);
     </script>
 
-    <div class="login-container">
-      <h2>Iniciar Sesión</h2>
-      <form id="login-form">
-        <div class="input-group">
-          <label for="username">Usuario:</label>
-          <input type="email" id="username" name="username" required />
-        </div>
-        <div class="input-group">
-          <label for="password">Contraseña:</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-        <div class="input-group">
-          <button type="submit">Entrar</button>
-        </div>
-      </form>
+    <header>
+      <div class="container">
+        <h1>Gestión Montesssori</h1>
+        <nav>
+          <a href="#gestion-escuelas">Gestión de Escuelas</a>
+          <a href="#registro">Registrar Escuela</a>
+          <a href="inicioDeSesion.html" class="btn">Iniciar Sesión</a>
+        </nav>
+      </div>
+    </header>
+    <div class="content" id="registro">
+      <div class="container">
+        <h2>Registro de Escuela</h2>
+        <!-- Contenido de la sección de registro -->
+      </div>
+    </div>
+    <div class="content" id="inicio-sesion">
+      <div class="container">
+        <h2>Iniciar Sesión</h2>
+        <!-- Contenido de la sección de inicio de sesión -->
+      </div>
+    </div>
+    <div class="content" id="gestion-escuelas">
+      <div class="container">
+        <h2>Gestión de Escuelas</h2>
+        <!-- Contenido de la sección de gestión de escuelas -->
+      </div>
     </div>
 
     <div class="footer" style="margin: auto; text-align: center">
