@@ -87,6 +87,7 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
         return {error: error.message};
       });
 });
+
 /* exports.setTenantClaim = functions.auth.user().onCreate((user) => {
   const email = user.email || '';
   const tenantId = email.split('@')[1].split('.')[0];
