@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Escuela y Checkout</title>
     <link rel="stylesheet" href="registroEscuelas.css" />
-    <script src="registroEscuelas.js" type="module"></script>
     <script src="https://js.stripe.com/v3/"></script>
+    <script type="module" src="registroEscuelas.js"></script>
 </head>
-  <body>
+<body>
+    <!-- Tu contenido HTML -->
     <div class="login-container">
       <h2>Registro de Escuela</h2>
       <form id="school-form">
@@ -32,14 +33,12 @@
           <option value="12M">12 Meses - $1,000 MXN/mes</option>
         </select>
 
-        <p>Total a Pagar: <input type="text" id="totalPrice" readonly></input></p>
+        <p>Total a Pagar: <input type="text" id="totalPrice" readonly></p>
 
         <button type="button" id="payButton">Pagar y registrar</button>
         <button type="button" onclick="inicio()">Regresar a Inicio</button>        
       </form>
     </div>
-    <h1>Productos Disponibles</h1>
-    <div id="product-container"></div>
     <script>
       document
         .getElementById("schoolName")
@@ -71,5 +70,5 @@
       }
     </script>
     <div class="footer">© 2024 Gestión Escolar Montessori</div>
-  </body>
+</body>
 </html>
