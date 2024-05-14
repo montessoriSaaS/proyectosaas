@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Welcome</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="index.css" />
+    <script type="module" src="index.js" defer></script>
+    <script type="module" src="logout.js" defer></script>
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/10.10.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/10.10.0/firebase-auth-compat.js"></script>
+    <script
+      defer
+      src="/__/firebase/10.10.0/firebase-database-compat.js"
+    ></script>
+    <script
+      defer
+      src="/__/firebase/10.10.0/firebase-firestore-compat.js"
+    ></script>
+    <script
+      defer
+      src="/__/firebase/10.10.0/firebase-functions-compat.js"
+    ></script>
+    <script
+      defer
+      src="/__/firebase/10.10.0/firebase-messaging-compat.js"
+    ></script>
+    <script
+      defer
+      src="/__/firebase/10.10.0/firebase-storage-compat.js"
+    ></script>
+    <script
+      defer
+      src="/__/firebase/10.10.0/firebase-analytics-compat.js"
+    ></script>
+    <script
+      defer
+      src="/__/firebase/10.10.0/firebase-remote-config-compat.js"
+    ></script>
+    <script
+      defer
+      src="/__/firebase/10.10.0/firebase-performance-compat.js"
+    ></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <script src="verificacion.js" defer></script>
+  </head>
+  <body>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyAEy6y6RQvOsZWW1OHQMxwT7dLZvIzMV3I",
+        authDomain: "deskmontessori-a3cb2.firebaseapp.com",
+        projectId: "deskmontessori-a3cb2",
+        storageBucket: "deskmontessori-a3cb2.appspot.com",
+        messagingSenderId: "325693574028",
+        appId: "1:325693574028:web:272bfa54294c335d6d64a9",
+        measurementId: "G-RLJVEHLMY5",
+      };
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script>
+
+    <header>
+      <div class="container">
+        <h1>Gestión Escolar Montessori</h1>
+        <nav>
+          <a href="#gestion-escuelas">Gestión de Escuelas</a>
+          <a href="registroEscuelas.html">Registrar Escuela</a>
+          <a href="inicioDeSesion.html" class="btn">Iniciar Sesión</a>
+        </nav>
+      </div>
+    </header>
+    <div class="content" id="registro">
+      <div class="container">
+        <h2>Registro de Escuela</h2>
+        <!-- Contenido de la sección de registro -->
+      </div>
+    </div>
+    <div class="content" id="inicio-sesion">
+      <div class="container">
+        <h2>Iniciar Sesión</h2>
+        <!-- Contenido de la sección de inicio de sesión -->
+      </div>
+    </div>
+    <div class="content" id="gestion-escuelas">
+      <div class="container">
+        <h2>Gestión de Escuelas</h2>
+        <!-- Contenido de la sección de gestión de escuelas -->
+      </div>
+    </div>
+
+    <div class="footer" style="margin: auto; text-align: center">
+      <p id="load">Firebase SDK Loading&hellip;</p>
+    </div>
+  </body>
+</html>
