@@ -76,18 +76,6 @@ functions.auth.user().onCreate(async (user) => {
   }
 });
 
-exports.addAdminRole = functions.https.onCall((data, context) => {
-  // Obtener el UID del usuario y asignar el rol de admin
-  const uid = data.uid;
-  return admin.auth().setCustomUserClaims(uid, {admin: true})
-      .then(() => {
-        return {message: `Éxito! ${uid} ha sido hecho administrador.`};
-      })
-      .catch((error) => {
-        return {error: error.message};
-      });
-});
-
 /* exports.setTenantClaim = functions.auth.user().onCreate((user) => {
   const email = user.email || '';
   const tenantId = email.split('@')[1].split('.')[0];

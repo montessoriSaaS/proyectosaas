@@ -22,7 +22,6 @@ const firebaseConfig = {
 // Inicialización de Firebase App
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const functions = getFunctions(app);
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
@@ -34,21 +33,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value;
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, username, password);
-      
-      // Usuario autenticado correctamente
-      console.log("Usuario autenticado:", userCredential.user);
-      auth.updateCurrentUser(userCredential.user);
+      if (username === "admin@deskmontessori.com" && password === "proyectoMonte!") {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          username,
+          password
+        );
 
-      console.log("Usuario actual después de iniciar sesión:", auth.currentUser);
+        // Usuario autenticado correctamente
+        console.log("Usuario autenticado:", userCredential.user);
+        auth.updateCurrentUser(userCredential.user);
 
-      // Redirigir al usuario a la página del dashboard
-      window.location.href = "dashboard.html";
+        console.log(
+          "Usuario actual después de iniciar sesión:",
+          auth.currentUser
+        );
+
+        // Redirigir al usuario a la página del dashboard
+        window.location.href = "gestionEscuelas.html";
+      } else {
+        alert("Usuario y/o contraseña incorrecta.¿\nIntenta de nuevo.");
+        return;
+      }
     } catch (error) {
-      if (error.code === 'auth/wrong-password') {
+      if (error.code === "auth/wrong-password") {
         console.error("Contraseña incorrecta:", error.message);
         alert("Contraseña incorrecta");
-      } else if (error.code === 'auth/user-not-found') {
+      } else if (error.code === "auth/user-not-found") {
         console.error("Usuario no encontrado:", error.message);
         alert("Usuario no encontrado");
       } else {

@@ -35,3 +35,12 @@ onAuthStateChanged(auth, (user) => {
     console.log("No hay usuario autenticado.");
   }
 });
+
+// Obtener el email del usuario actual
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+      document.getElementById("user-email").textContent = user.email;
+  } else {
+      window.location.href = "inicioDeSesion.html"; // Redirigir si no hay un usuario autenticado
+  }
+});

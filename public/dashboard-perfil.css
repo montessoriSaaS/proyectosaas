@@ -1,0 +1,136 @@
+/* Estilos generales */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  width: auto; /* Ajuste para que el botón no ocupe todo el ancho */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Barra lateral */
+.sidebar {
+  background-color: #333;
+  color: white;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+
+.sidebar h3 {
+  color: #fff;
+}
+
+.sidebar h5 {
+  margin-top: 20px;
+  font-weight: normal;
+}
+
+.sidebar a {
+  color: white;
+  padding: 10px 15px;
+  display: block;
+  text-decoration: none;
+  transition: background 0.3s, padding-left 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #555;
+  padding-left: 25px;
+}
+
+.sidebar a.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Contenido principal */
+.content {
+  margin-left: 250px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  max-width: 600px; /* Añadir un máximo ancho para la sección de información del perfil */
+  margin: 0 auto; /* Centrar la sección de información del perfil */
+}
+
+.profile-info p,
+.profile-info label {
+  margin: 10px 0;
+}
+
+.profile-info input[type="password"],
+.profile-info select {
+  padding: 10px;
+  width: 100%;
+  max-width: 400px; /* Ajuste para que los inputs no ocupen todo el ancho */
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profile-info button {
+  width: auto; /* Ajuste para que los botones no ocupen todo el ancho */
+  max-width: 400px; /* Añadir un máximo ancho para los botones */
+}
+
+/* Footer */
+.footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  margin-top: auto; /* Mantener el footer en la parte inferior */
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {
+    text-align: center;
+  }
+  .content {
+    margin-left: 0;
+  }
+  .footer {
+    width: 100%;
+    margin-left: 0;
+  }
+}

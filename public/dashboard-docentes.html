@@ -1,49 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <title>Alumnos</title>
+    <title>Gestión de Docentes</title>
     <link rel="stylesheet" href="dashboard-docentes.css" />
     <script type="module" src="docentes.js" defer></script>
     <script type="module" src="logout.js" defer></script>
-  </head>
-  <body>
+    <script type="module" src="permissions.js"></script>
+</head>
+<body>
     <div class="sidebar">
-      <h3>Dashboard</h3>
-      <a href="dashboard.html">Inicio</a>
-      <a href="dashboard-alumnos.html">Alumnos</a>
-      <a href="dashboard-docentes.html">Docentes</a>
-      <a href="dashboard-materias.html">Materias</a>
-      <a href="dashboard-grupos.html">Grupos</a>
-      <a href="dashboard-calificaciones.html">Calificaciones</a>
-      <a href="dashboard-usuarios.html">Usuarios</a>
-      <a href="dashboard-tenants.html">Tenants</a>
-      <a href="inicioDeSesion.html" onclick="logout();">Cerrar sesión</a>
+        <h3>Dashboard</h3>
+        <h5>Usuario: <span id="user-email">Nombre de usuario</span></h5>
+        <a href="dashboard.html">Inicio</a>
+        <a href="dashboard-perfil.html">Perfil</a>
+        <a href="dashboard-alumnos.html">Alumnos</a>
+        <a href="dashboard-docentes.html">Docentes</a>
+        <a href="dashboard-materias.html">Materias</a>
+        <a href="dashboard-grupos.html">Grupos</a>
+        <a href="dashboard-calificaciones.html">Calificaciones</a>
+        <a href="dashboard-usuarios.html">Usuarios</a>
+        <a href="inicioDeSesion.html" onclick="logout();">Cerrar sesión</a>
     </div>
 
     <div class="content">
-      <div class="header">
-        <h1>Gestión de Docentes</h1>
-      </div>
-      <form id="docentesForm">
-        <input type="hidden" id="docentestId" value="" />
-        <input
-          type="text"
-          id="docentes"
-          placeholder="Nombre del Docente"
-          required
-        />
-        <button type="submit">Guardar</button>
-      </form>
+        <div class="header">
+            <h1>Gestión de Docentes</h1>
+        </div>
+        <form id="teacherForm">
+            <input type="hidden" id="teacherId" value="" />
+            <label for="teacherName">Nombre Completo</label>
+            <input type="text" id="teacherName" placeholder="Nombre Completo" required />
+            <label for="teacherDOB">Fecha de Nacimiento</label>
+            <input type="date" id="teacherDOB" placeholder="Fecha de Nacimiento" required />
+            <br>
+            <label for="teacherCURP">CURP</label>
+            <input type="text" id="teacherCURP" placeholder="CURP" required />
+            <label for="teacherAddress">Dirección</label>
+            <input type="text" id="teacherAddress" placeholder="Dirección" required />
+            <label for="teacherPhone">Teléfono</label>
+            <input type="tel" id="teacherPhone" placeholder="Teléfono" required />
+            <br>
+            <label for="teacherProfessionalID">Cédula Profesional</label>
+            <input type="text" id="teacherProfessionalID" placeholder="Cédula Profesional" required />
+            <label for="teacherSpecialty">Especialidad</label>
+            <input type="text" id="teacherSpecialty" placeholder="Especialidad" required />
+            <label for="teacherDepartment">Departamento</label>
+            <input type="text" id="teacherDepartment" placeholder="Departamento" required />
+            <button type="submit">Guardar</button>
+        </form>
 
-      <!-- Este botón podría tener un campo para introducir el ID del alumno a eliminar -->
-      <input
-        type="text"
-        id="deletedocentesId"
-        placeholder="ID del Docente a eliminar"
-      />
-      <button id="deleteButton">Eliminar Docente</button>
+        <label for="searchTeacherName">Buscar Docente por Nombre</label>
+        <input type="text" id="searchTeacherName" placeholder="Buscar Docente por Nombre" />
+        <button id="searchButton">Buscar Docente</button>
+        <div id="teacherResults"></div>
+        <br>
+        <label for="deleteTeacherName">Nombre Completo del Docente a eliminar</label>
+        <input type="text" id="deleteTeacherName" placeholder="Nombre Completo del Docente a eliminar" />
+        <button id="deleteButton">Eliminar Docente</button>
+
+        <h2>Lista de Docentes</h2>
+        <table id="teachersTable">
+            <thead>
+                <tr>
+                    <th>Nombre Completo</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>CURP</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                    <th>Cédula Profesional</th>
+                    <th>Especialidad</th>
+                    <th>Departamento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Se llenará dinámicamente con JavaScript -->
+            </tbody>
+        </table>
     </div>
     <div class="footer">© 2024 Dashboard Template</div>
-  </body>
+</body>
 </html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gestión Escolar Montessori</title>
+    <link rel="stylesheet" href="dashboard-perfil.css" />
+    <script type="module" src="logout.js" defer></script>
+    <script type="module" src="pruebas.js" defer></script>
+    <script type="module" src="dashboard-perfil.js" defer></script>
+    <script type="module" src="permissions.js"></script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h3>Dashboard</h3>
+      <h5>Usuario: <span id="user-email">Nombre de usuario</span></h5>
+      <a href="dashboard.html">Inicio</a>
+      <a href="dashboard-perfil.html">Perfil</a>
+      <a href="dashboard-alumnos.html">Alumnos</a>
+      <a href="dashboard-docentes.html">Docentes</a>
+      <a href="dashboard-materias.html">Materias</a>
+      <a href="dashboard-grupos.html">Grupos</a>
+      <a href="dashboard-calificaciones.html">Calificaciones</a>
+      <a href="dashboard-usuarios.html">Usuarios</a>
+      <a href="inicioDeSesion.html" onclick="logout();">Cerrar sesión</a>
+    </div>
+
+    <div class="content">
+      <div class="header">
+        <h1>Perfil</h1>
+      </div>
+      <div class="profile-info">
+        <h2>Información de Perfil</h2>
+        <p>Email: <span id="profile-email"></span></p>
+        <h3>Cambiar contraseña</h3>
+        <label for="new-password">Nueva contraseña:</label>
+        <br/>
+        <input type="password" id="new-password" />
+        <br/>
+        <button type="button" id="toggleNewPassword">Mostrar contraseña</button>
+        <br/>
+        <label for="confirm-new-password">Confirmar nueva contraseña:</label>
+        <br/>
+        <input type="password" id="confirm-new-password" />
+        <br/>
+        <button type="button" id="toggleConfimPassword">Mostrar contraseña</button>
+        <br/>
+        <button id="change-password-button">Cambiar contraseña</button>
+        <div id="admin-controls" style="display: none">
+          <h3>Suscripción</h3>
+          <p>
+            Estado de suscripción:
+            <span id="subscription-status">Desconocido</span>
+          </p>
+          <p>
+            Fecha límite de suscripción:
+            <span id="subscription-end-date"></span>
+          </p>
+          <select id="subscriptionSelect" required>
+            <option value="1D">1 Día - $6 MXN</option>
+            <option value="1M">1 Mes - $100 MXN</option>
+            <option value="6M">6 Meses - $500 MXN</option>
+            <option value="12M">12 Meses - $1,000 MXN</option>
+          </select>
+          <button id="update-subscription-button">
+            Actualizar plan de suscripción
+          </button>
+          <br/><br/>
+          <button id="cancel-subscription-button">Cancelar suscripción</button>
+          <button id="delete-account-button">Borrar cuenta</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">© 2024 Gestión Escolar Montessori</div>
+  </body>
+</html>

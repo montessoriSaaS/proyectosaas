@@ -1,27 +1,46 @@
 /* Contenido de dashboard.css */
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 .sidebar {
+  width: 200px;
   background-color: #333;
   color: white;
-  width: 250px;
+  padding: 20px;
   height: 100vh;
   position: fixed;
-  padding: 20px 0;
-  overflow-y: auto;
+  top: 0;
+  left: 0;
 }
+
+.sidebar h3 {
+  color: #fff;
+}
+
+.sidebar h5 {
+  margin-top: 20px;
+  font-weight: normal;
+}
+
 .sidebar a {
-  color: white;
-  padding: 10px 15px;
   display: block;
-  text-decoration: none;
-  transition: background 0.3s, padding-left 0.3s;
+  padding: 10px 0;
+  color: #ccc;
 }
+
 .sidebar a:hover {
   background-color: #555;
   padding-left: 25px;
+}
+
+.sidebar a.active {
+  background-color: #007BFF;
+  color: white;
 }
 .content {
   margin-left: 250px;
@@ -35,14 +54,8 @@ body {
   margin-bottom: 20px;
 }
 .footer {
-  background-color: #f0f0f0;
-  color: #333;
   text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: calc(100% - 250px);
-  margin-left: 250px;
+  margin-top: 20px;
 }
 form {
   background: #ffffff;
@@ -89,6 +102,25 @@ button:active {
 }
 button:focus {
   outline: none;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
 }
 @media (max-width: 600px) {
   .sidebar {

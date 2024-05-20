@@ -6,11 +6,15 @@
     <link rel="stylesheet" href="dashboard-usuarios.css" />
     <script type="module" src="tenantId.js" defer></script>
     <script type="module" src="logout.js" defer></script>
+    <script type="module" src="pruebas.js" defer></script>
+    <script type="module" src="permissions.js"></script>
   </head>
   <body>
     <div class="sidebar">
       <h3>Dashboard</h3>
+      <h5>Usuario: <span id="user-email">Nombre de usuario</span></h5>
       <a href="dashboard.html">Inicio</a>
+      <a href="dashboard-perfil.html">Perfil</a>
       <a href="dashboard-alumnos.html">Alumnos</a>
       <a href="dashboard-docentes.html">Docentes</a>
       <a href="dashboard-materias.html">Materias</a>
@@ -26,75 +30,39 @@
       </div>
       <form id="userRegistrationForm">
         <label for="email">Correo electrónico:</label>
-        <input
-          type="email"
-          id="userEmail"
-          placeholder="Email del Usuario"
-          required
-        />
+        <input type="email" id="userEmail" placeholder="Email del Usuario" required />
         <br />
         <label for="password">Contraseña:</label>
-        <input
-          type="password"
-          id="userPassword"
-          placeholder="Contraseña"
-          required
-        />
+        <input type="password" id="userPassword" placeholder="Contraseña" required />
         <br />
         <button type="button" id="togglePassword">Mostrar contraseña</button>
         <fieldset>
           <legend>Permisos para acceder:</legend>
-          <input
-            type="checkbox"
-            id="permStudents"
-            name="permissions"
-            value="alumnos"
-          />
+          <input type="checkbox" id="permStudents" name="permissions" value="alumnos" />
           <label for="permStudents">Alumnos</label>
           <br />
-          <input
-            type="checkbox"
-            id="permTeachers"
-            name="permissions"
-            value="docentes"
-          />
+          <input type="checkbox" id="permTeachers" name="permissions" value="docentes" />
           <label for="permTeachers">Docentes</label>
           <br />
-          <input
-            type="checkbox"
-            id="permSubjects"
-            name="permissions"
-            value="materias"
-          />
+          <input type="checkbox" id="permSubjects" name="permissions" value="materias" />
           <label for="permSubjects">Materias</label>
           <br />
-          <input
-            type="checkbox"
-            id="permGroups"
-            name="permissions"
-            value="grupos"
-          />
+          <input type="checkbox" id="permGroups" name="permissions" value="grupos" />
           <label for="permGroups">Grupos</label>
           <br />
-          <input
-            type="checkbox"
-            id="permUsers"
-            name="permissions"
-            value="usuarios"
-          />
+          <input type="checkbox" id="permGrades" name="permissions" value="calificaciones" />
+          <label for="permGrades">Calificaciones</label>
+          <br />
+          <input type="checkbox" id="permUsers" name="permissions" value="usuarios" />
           <label for="permUsers">Usuarios</label>
         </fieldset>
         <br />
         <button type="submit">Registrar Usuario</button>
-        <button id="modifyUserButton">Modificar Usuario</button>
+        <button type="button" id="modifyUserButton">Modificar Usuario</button>
       </form>
       <br />
-      <input
-        type="email"
-        id="userEmailDelete"
-        placeholder="Email del Usuario"
-      />
-      <button id="deleteUserButton">Eliminar Usuario</button>
+      <input type="email" id="userEmailDelete" placeholder="Email del Usuario" />
+      <button type="button" id="deleteUserButton">Eliminar Usuario</button>
       <br />
       <br />
       <div id="userList">
@@ -104,7 +72,7 @@
             <tr>
               <th>Email</th>
               <th>Permisos</th>
-              <th>Contraseñas</th>
+              <th>Contraseña</th>
             </tr>
           </thead>
           <tbody id="usersList">

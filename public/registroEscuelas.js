@@ -1,9 +1,10 @@
-// Import the functions you need from the SDKs you need
+// registroEscuelas.js
+// Se importan las funciones necesarias de los SDKs
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  deleteUser
+  deleteUser,
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 import {
   getFirestore,
@@ -13,14 +14,9 @@ import {
   collection,
   addDoc,
   onSnapshot,
-  getDocs
 } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-firestore.js";
-import {
-  getFunctions,
-  httpsCallable
-} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-functions.js";
 
-// Your web app's Firebase configuration
+// Configuración de Firebase de mi aplicación web
 const firebaseConfig = {
   apiKey: "AIzaSyAEy6y6RQvOsZWW1OHQMxwT7dLZvIzMV3I",
   authDomain: "deskmontessori-a3cb2.firebaseapp.com",
@@ -31,21 +27,23 @@ const firebaseConfig = {
   measurementId: "G-RLJVEHLMY5",
 };
 
-// Initialize Firebase
+// Inicialización de Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const functions = getFunctions(app);
 
-// Handle subscription creation and payment
 document
   .getElementById("payButton")
   .addEventListener("click", async function () {
-    const schoolName = document.getElementById("schoolName").value;
-    const adminEmail = document.getElementById("adminEmail").value;
+    const loadingElement = document.getElementById("loading");
+    loadingElement.style.display = "block";
+
+    const schoolName = document.getElementById("schoolName").value.trim();
+    const adminEmail = document.getElementById("adminEmail").value.trim();
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
-    let subscriptionType = document.getElementById("subscriptionSelect").value;
+    const subscriptionTypeKey =
+      document.getElementById("subscriptionSelect").value;
 
     // Match subscription type with Stripe price IDs
     const subscriptionTypes = {
@@ -54,34 +52,72 @@ document
       "6M": "price_1PFNAcG4W5PBvrHX0I2NJKeR",
       "12M": "price_1PFNB9G4W5PBvrHXPuFK2dXO",
     };
-    subscriptionType = subscriptionTypes[subscriptionType];
+    const subscriptionType = subscriptionTypes[subscriptionTypeKey];
+
+    if (
+      !schoolName ||
+      !adminEmail ||
+      !password ||
+      !confirmPassword ||
+      !subscriptionType
+    ) {
+      alert("Por favor, complete todos los campos.");
+      loadingElement.style.display = "none";
+      return;
+    }
 
     if (password !== confirmPassword) {
       alert("Las contraseñas no coinciden.");
-      return;
+      loadingElement.style.display = "none";
+      return; // No se hace registros si las contraseñas no coinciden
     }
 
     let userCredential;
     try {
-      userCredential = await createUserWithEmailAndPassword(auth, adminEmail, password);
+      // Creación del usuario en Auth
+      userCredential = await createUserWithEmailAndPassword(
+        auth,
+        adminEmail,
+        password
+      );
 
-      await setDoc(doc(db, `schools/${schoolName.replace(/\s+/g, "").toLowerCase()}/admins`, userCredential.user.uid), {
-        tenant: schoolName,
-        adminEmail: adminEmail,
-        password: password,
-        priceId: subscriptionType,
-      });
+      // Creación del usuario en Firestore
+      await setDoc(
+        doc(
+          db,
+          `schools/${schoolName.replace(/\s+/g, "").toLowerCase()}/admins`,
+          userCredential.user.uid
+        ),
+        {
+          tenantId: schoolName.replace(/\s+/g, "").toLowerCase(),
+          adminEmail: adminEmail,
+          password: password,
+          priceId: subscriptionType,
+          subscription: "Activa",
+        }
+      );
 
-      const checkoutSessionRef = await addDoc(collection(db, "customers", userCredential.user.uid, "checkout_sessions"), {
-        price: subscriptionType,
-        success_url: window.location.origin,
-        cancel_url: window.location.origin,
-      });
+      // Manejo del pago en Stripe
+      const checkoutSessionRef = await addDoc(
+        collection(
+          db,
+          "customers",
+          userCredential.user.uid,
+          "checkout_sessions"
+        ),
+        {
+          price: subscriptionType,
+          success_url: window.location.origin + "/dashboard.html", // Redirección al dashboard en origin/dashboard.html
+          cancel_url: window.location.origin + "/registroEscuelas.html", // Redirección al registro de Escuelas
+        }
+      );
 
       onSnapshot(checkoutSessionRef, (snap) => {
         const { error, url } = snap.data();
         if (error) {
           alert(`An error occurred: ${error.message}`);
+          loadingElement.style.display = "none";
+          return;
         }
         if (url) {
           window.location.assign(url);
@@ -89,13 +125,26 @@ document
       });
 
       console.log("Escuela registrada con éxito en Firestore");
-      alert("Procesamiento y registro de la escuela completado con éxito.");
+      alert(
+        "Procesamiento y registro de la escuela completado con éxito.\n Se redirigen para realizar el pago."
+      );
     } catch (error) {
       console.error("Error en el proceso de registro y pago:", error);
+      // Si la transacción del pago se cancela, se elimina el usuario creado de Auth y Firestore
       if (userCredential) {
         await deleteUser(userCredential.user);
-        await deleteDoc(doc(db, `schools/${schoolName.replace(/\s+/g, "").toLowerCase()}/admins`, userCredential.user.uid));
+        await deleteDoc(
+          doc(
+            db,
+            `schools/${schoolName.replace(/\s+/g, "").toLowerCase()}/admins`,
+            userCredential.user.uid
+          )
+        );
       }
-      alert("Error al procesar el pago y registrar la escuela. Por favor, intente nuevamente.");
+      alert(
+        "Error al procesar el pago y registrar la escuela. Por favor, intente nuevamente."
+      );
+    } finally {
+      loadingElement.style.display = "none";
     }
   });

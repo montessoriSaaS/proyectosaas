@@ -1,0 +1,175 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+#user-info {
+    display: flex;
+    align-items: center;
+}
+
+#user-info span {
+    margin-right: 10px;
+}
+
+#logout-button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#logout-button:hover {
+    background-color: #004494;
+}
+
+/* Main content styles */
+main {
+    width: 80%;
+    margin-top: 30px;
+}
+
+h2 {
+    color: #333;
+}
+
+section {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+input[type="email"], input[type="password"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+fieldset {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+legend {
+    padding: 0 5px;
+}
+
+#togglePassword, #toggleModifyPassword {
+    margin-left: 5px;
+    background-color: #008CBA;
+}
+
+#togglePassword:hover, #toggleModifyPassword:hover {
+    background-color: #007bb5;
+}
+
+/* Section and button styles */
+#schoolsListSection {
+    margin-top: 20px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions button {
+    background-color: #4CAF50;
+}
+
+.actions button.delete {
+    background-color: #f44336;
+}
+
+.actions button.delete:hover {
+    background-color: #d32f2f;
+}
+
+.actions button.modify {
+    background-color: #008CBA;
+}
+
+.actions button.modify:hover {
+    background-color: #007bb5;
+}

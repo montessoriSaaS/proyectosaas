@@ -1,36 +1,107 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>Gestión de Grupos</title>
     <link rel="stylesheet" href="dashboard-grupos.css" />
+    <script type="module" src="grupos.js" defer></script>
     <script type="module" src="logout.js" defer></script>
-    <script type="module" src="pruebas.js" defer></script>
-  </head>
-  <body>
+    <script type="module" src="permissions.js"></script>
+</head>
+<body>
     <div class="sidebar">
-      <h3>Dashboard</h3>
-      <a href="dashboard.html">Inicio</a>
-      <a href="dashboard-alumnos.html">Alumnos</a>
-      <a href="dashboard-docentes.html">Docentes</a>
-      <a href="dashboard-materias.html">Materias</a>
-      <a href="dashboard-grupos.html">Grupos</a>
-      <a href="dashboard-calificaciones.html">Calificaciones</a>
-      <a href="dashboard-usuarios.html">Usuarios</a>
-      <a href="dashboard-tenants.html">Tenants</a>
-      <a href="inicioDeSesion.html" onclick="logout();">Cerrar sesión</a>
+        <h3>Dashboard</h3>
+        <h5>Usuario: <span id="user-email">Nombre de usuario</span></h5>
+        <a href="dashboard.html">Inicio</a>
+        <a href="dashboard-perfil.html">Perfil</a>
+        <a href="dashboard-alumnos.html">Alumnos</a>
+        <a href="dashboard-docentes.html">Docentes</a>
+        <a href="dashboard-materias.html">Materias</a>
+        <a href="dashboard-grupos.html">Grupos</a>
+        <a href="dashboard-calificaciones.html">Calificaciones</a>
+        <a href="dashboard-usuarios.html">Usuarios</a>
+        <a href="inicioDeSesion.html" onclick="logout();">Cerrar sesión</a>
     </div>
 
     <div class="content">
-      <div class="header">
-        <h1>Bienvenidos a la página principal</h1>
-      </div>
-      <p>
-        Utiliza la barra de la izquierda para navegar entre las diferentes
-        secciones de la gestión escolar.
-      </p>
-    </div>
+        <div class="header">
+            <h1>Gestión de Grupos</h1>
+        </div>
+        <form id="groupForm">
+            <input type="hidden" id="groupId" value="" />
 
+            <label for="groupName">Nombre del Grupo</label>
+            <input type="text" id="groupName" placeholder="Nombre del Grupo" required />
+            <br>
+
+            <label for="groupStudents">Seleccionar Alumnos</label>
+            <select id="groupStudents" multiple required></select>
+            <br>
+
+            <label for="groupTeacher">Seleccionar Docente</label>
+            <select id="groupTeacher" required></select>
+            <br>
+
+            <label for="groupSubject">Seleccionar Materia</label>
+            <select id="groupSubject" required></select>
+            <br>
+
+            <label for="groupSchedule">Horario</label>
+            <input type="text" id="groupSchedule" placeholder="Horario" required />
+            <br>
+
+            <label for="groupGrade">Grado</label>
+            <select id="groupGrade" required>
+                <option value="1">Primero</option>
+                <option value="2">Segundo</option>
+                <option value="3">Tercero</option>
+                <option value="4">Cuarto</option>
+                <option value="5">Quinto</option>
+                <option value="6">Sexto</option>
+            </select>
+            <br>
+
+            <label for="groupDays">Días de la Semana</label>
+            <div id="groupDays">
+                <input type="checkbox" id="lunes" name="days" value="Lunes"><label for="lunes"> Lunes</label><br>
+                <input type="checkbox" id="martes" name="days" value="Martes"><label for="martes"> Martes</label><br>
+                <input type="checkbox" id="miercoles" name="days" value="Miércoles"><label for="miercoles"> Miércoles</label><br>
+                <input type="checkbox" id="jueves" name="days" value="Jueves"><label for="jueves"> Jueves</label><br>
+                <input type="checkbox" id="viernes" name="days" value="Viernes"><label for="viernes"> Viernes</label><br>
+            </div>
+            <br>
+
+            <button type="submit">Guardar</button>
+        </form>
+
+        <label for="searchGroupName">Buscar Grupo por Nombre</label>
+        <input type="text" id="searchGroupName" placeholder="Buscar Grupo por Nombre" />
+        <button id="searchButton">Buscar Grupo</button>
+        <div id="groupResults"></div>
+        <br>
+        
+        <label for="deleteGroupName">Nombre del Grupo a eliminar</label>
+        <input type="text" id="deleteGroupName" placeholder="Nombre del Grupo a eliminar" />
+        <button id="deleteButton">Eliminar Grupo</button>
+
+        <h2>Lista de Grupos</h2>
+        <table id="groupsTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Alumnos</th>
+                    <th>Docente</th>
+                    <th>Materia</th>
+                    <th>Horario</th>
+                    <th>Grado</th>
+                    <th>Días</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Se llenará dinámicamente con JavaScript -->
+            </tbody>
+        </table>
+    </div>
     <div class="footer">© 2024 Gestión Escolar Montessori</div>
-  </body>
+</body>
 </html>
