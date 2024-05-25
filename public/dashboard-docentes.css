@@ -84,15 +84,19 @@ button:active {
 button:focus {
   outline: none;
 }
+.table-container {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  min-width: 1200px; /* Ajusta este valor según sea necesario */
 }
 
-table,
-th,
-td {
+table, th, td {
   border: 1px solid #ddd;
   padding: 8px;
 }
@@ -104,6 +108,33 @@ th {
 
 tr:hover {
   background-color: #f5f5f5;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.search-section, .modify-section {
+  margin-top: 20px;
+}
+
+.docente-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.docente-card h3 {
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.docente-card p {
+  margin: 5px 0;
 }
 @media (max-width: 600px) {
   .sidebar {

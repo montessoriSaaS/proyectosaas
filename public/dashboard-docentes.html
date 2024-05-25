@@ -27,56 +27,141 @@
         <div class="header">
             <h1>Gestión de Docentes</h1>
         </div>
-        <form id="teacherForm">
-            <input type="hidden" id="teacherId" value="" />
-            <label for="teacherName">Nombre Completo</label>
-            <input type="text" id="teacherName" placeholder="Nombre Completo" required />
-            <label for="teacherDOB">Fecha de Nacimiento</label>
-            <input type="date" id="teacherDOB" placeholder="Fecha de Nacimiento" required />
+        <form id="docenteForm">
+            <input type="hidden" id="docenteId" value="" />
+
+            <label for="docenteFirstName">Nombre(s)</label>
+            <input type="text" id="docenteFirstName" placeholder="Nombre(s)" required />
             <br>
-            <label for="teacherCURP">CURP</label>
-            <input type="text" id="teacherCURP" placeholder="CURP" required />
-            <label for="teacherAddress">Dirección</label>
-            <input type="text" id="teacherAddress" placeholder="Dirección" required />
-            <label for="teacherPhone">Teléfono</label>
-            <input type="tel" id="teacherPhone" placeholder="Teléfono" required />
+
+            <label for="docenteLastName">Apellido Paterno</label>
+            <input type="text" id="docenteLastName" placeholder="Apellido Paterno" required />
             <br>
-            <label for="teacherProfessionalID">Cédula Profesional</label>
-            <input type="text" id="teacherProfessionalID" placeholder="Cédula Profesional" required />
-            <label for="teacherSpecialty">Especialidad</label>
-            <input type="text" id="teacherSpecialty" placeholder="Especialidad" required />
-            <label for="teacherDepartment">Departamento</label>
-            <input type="text" id="teacherDepartment" placeholder="Departamento" required />
+
+            <label for="docenteSecondLastName">Apellido Materno</label>
+            <input type="text" id="docenteSecondLastName" placeholder="Apellido Materno" />
+            <br>
+
+            <label for="docenteDOB">Fecha de Nacimiento</label>
+            <input type="date" id="docenteDOB" required />
+            <br>
+
+            <label for="docenteCURP">CURP</label>
+            <input type="text" id="docenteCURP" placeholder="CURP" />
+            <br>
+
+            <label for="docenteAddress">Dirección</label>
+            <input type="text" id="docenteAddress" placeholder="Dirección" required />
+            <br>
+
+            <label for="docenteNationality">Nacionalidad</label>
+            <select id="docenteNationality" required>
+                <option value="Mexicana">Mexicana</option>
+                <option value="Extranjera">Extranjera</option>
+            </select>
+            <br>
+
+            <label for="docenteCedula">Cédula Profesional</label>
+            <input type="text" id="docenteCedula" placeholder="Cédula Profesional" />
+            <br>
+
+            <label for="docenteContact">Contacto</label>
+            <input type="tel" id="docenteContact" placeholder="Contacto" required />
+            <br>
+
+            <label for="docenteEspecialidad">Especialidad</label>
+            <input type="text" id="docenteEspecialidad" placeholder="Especialidad" />
+            <br>
+
             <button type="submit">Guardar</button>
         </form>
 
-        <label for="searchTeacherName">Buscar Docente por Nombre</label>
-        <input type="text" id="searchTeacherName" placeholder="Buscar Docente por Nombre" />
-        <button id="searchButton">Buscar Docente</button>
-        <div id="teacherResults"></div>
-        <br>
-        <label for="deleteTeacherName">Nombre Completo del Docente a eliminar</label>
-        <input type="text" id="deleteTeacherName" placeholder="Nombre Completo del Docente a eliminar" />
+        <div class="search-section">
+            <label for="searchDocenteName">Buscar Docente por Nombre</label>
+            <input type="text" id="searchDocenteName" placeholder="Buscar Docente por Nombre" />
+            <button id="searchButton">Buscar Docente</button>
+            <div id="docenteResults"></div>
+        </div>
+
+        <div class="modify-section">
+            <h2>Modificar Información del Docente</h2>
+            <form id="modifyDocenteForm">
+                <input type="hidden" id="modifyDocenteId" value="" />
+
+                <label for="modifyDocenteFirstName">Nombre(s)</label>
+                <input type="text" id="modifyDocenteFirstName" placeholder="Nombre(s)" required />
+                <br>
+
+                <label for="modifyDocenteLastName">Apellido Paterno</label>
+                <input type="text" id="modifyDocenteLastName" placeholder="Apellido Paterno" required />
+                <br>
+
+                <label for="modifyDocenteSecondLastName">Apellido Materno</label>
+                <input type="text" id="modifyDocenteSecondLastName" placeholder="Apellido Materno" />
+                <br>
+
+                <label for="modifyDocenteDOB">Fecha de Nacimiento</label>
+                <input type="date" id="modifyDocenteDOB" required />
+                <br>
+
+                <label for="modifyDocenteCURP">CURP</label>
+                <input type="text" id="modifyDocenteCURP" placeholder="CURP" />
+                <br>
+
+                <label for="modifyDocenteAddress">Dirección</label>
+                <input type="text" id="modifyDocenteAddress" placeholder="Dirección" required />
+                <br>
+
+                <label for="modifyDocenteNationality">Nacionalidad</label>
+                <select id="modifyDocenteNationality" required>
+                    <option value="Mexicana">Mexicana</option>
+                    <option value="Extranjera">Extranjera</option>
+                </select>
+                <br>
+
+                <label for="modifyDocenteCedula">Cédula Profesional</label>
+                <input type="text" id="modifyDocenteCedula" placeholder="Cédula Profesional" />
+                <br>
+
+                <label for="modifyDocenteContact">Contacto</label>
+                <input type="tel" id="modifyDocenteContact" placeholder="Contacto" required />
+                <br>
+
+                <label for="modifyDocenteEspecialidad">Especialidad</label>
+                <input type="text" id="modifyDocenteEspecialidad" placeholder="Especialidad" />
+                <br>
+
+                <button type="submit">Modificar</button>
+            </form>
+        </div>
+
+        <label for="deleteDocenteId">ID del Docente a eliminar</label>
+        <input type="text" id="deleteDocenteId" placeholder="ID del Docente a eliminar" />
         <button id="deleteButton">Eliminar Docente</button>
 
         <h2>Lista de Docentes</h2>
-        <table id="teachersTable">
-            <thead>
-                <tr>
-                    <th>Nombre Completo</th>
-                    <th>Fecha de Nacimiento</th>
-                    <th>CURP</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
-                    <th>Cédula Profesional</th>
-                    <th>Especialidad</th>
-                    <th>Departamento</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Se llenará dinámicamente con JavaScript -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table id="docentesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre(s)</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>CURP</th>
+                        <th>Dirección</th>
+                        <th>Nacionalidad</th>
+                        <th>Cédula Profesional</th>
+                        <th>Contacto</th>
+                        <th>Especialidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Se llenará dinámicamente con JavaScript -->
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="footer">© 2024 Dashboard Template</div>
 </body>

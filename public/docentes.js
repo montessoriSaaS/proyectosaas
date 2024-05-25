@@ -8,7 +8,8 @@ import {
   collection,
   query,
   where,
-  deleteDoc
+  deleteDoc,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
 import {
   getAuth,
@@ -33,68 +34,88 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // Manejo de autenticación
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
     document.getElementById("user-email").textContent = user.email;
-    loadTeachers();
+    loadDocentes();
   } else {
     window.location.href = "inicioDeSesion.html";
   }
 });
 
 // Función para agregar o actualizar un docente
-document.getElementById("teacherForm").addEventListener("submit", async (e) => {
+document.getElementById("docenteForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  const teacherName = document.getElementById("teacherName").value;
-  const teacherDOB = document.getElementById("teacherDOB").value;
-  const teacherCURP = document.getElementById("teacherCURP").value;
-  const teacherAddress = document.getElementById("teacherAddress").value;
-  const teacherPhone = document.getElementById("teacherPhone").value;
-  const teacherProfessionalID = document.getElementById("teacherProfessionalID").value;
-  const teacherSpecialty = document.getElementById("teacherSpecialty").value;
-  const teacherDepartment = document.getElementById("teacherDepartment").value;
 
   const user = auth.currentUser;
   const domain = user.email.split("@")[1].split(".")[0];
-  const teacherId = doc(collection(db, `schools/${domain}/teachers`)).id;
 
-  await setDoc(doc(db, `schools/${domain}/teachers/${teacherId}`), {
-    name: teacherName,
-    dob: teacherDOB,
-    curp: teacherCURP,
-    address: teacherAddress,
-    phone: teacherPhone,
-    professionalID: teacherProfessionalID,
-    specialty: teacherSpecialty,
-    department: teacherDepartment
+  const docenteId = document.getElementById("docenteId").value || doc(collection(db, `schools/${domain}/docentes`)).id;
+  const docenteFirstName = document.getElementById("docenteFirstName").value;
+  const docenteLastName = document.getElementById("docenteLastName").value;
+  const docenteSecondLastName = document.getElementById("docenteSecondLastName").value;
+  const docenteDOB = document.getElementById("docenteDOB").value;
+  const docenteCURP = document.getElementById("docenteCURP").value;
+  const docenteAddress = document.getElementById("docenteAddress").value;
+  const docenteNationality = document.getElementById("docenteNationality").value;
+  const docenteCedula = document.getElementById("docenteCedula").value;
+  const docenteContact = document.getElementById("docenteContact").value;
+  const docenteEspecialidad = document.getElementById("docenteEspecialidad").value;
+
+  const docenteRef = doc(db, `schools/${domain}/docentes/${docenteId}`);
+
+  await setDoc(docenteRef, {
+    id: docenteId,
+    firstName: docenteFirstName,
+    lastName: docenteLastName,
+    secondLastName: docenteSecondLastName,
+    dob: docenteDOB,
+    curp: docenteCURP,
+    address: docenteAddress,
+    nationality: docenteNationality,
+    cedula: docenteCedula,
+    contact: docenteContact,
+    especialidad: docenteEspecialidad
   });
 
   alert("Docente guardado exitosamente.");
-  document.getElementById("teacherForm").reset();
-  loadTeachers(); // Recargar la lista de docentes
+  document.getElementById("docenteForm").reset();
+  loadDocentes(); // Recargar la lista de docentes
 });
 
-// Función para buscar docentes por nombre completo
+// Función para buscar docentes por nombre
 document.getElementById("searchButton").addEventListener("click", async () => {
-  const teacherName = document.getElementById("searchTeacherName").value;
+  const searchName = document.getElementById("searchDocenteName").value;
 
-  if (!teacherName) {
+  if (!searchName) {
     alert("Por favor, introduzca el nombre del docente a buscar.");
     return;
   }
 
   const user = auth.currentUser;
   const domain = user.email.split("@")[1].split(".")[0];
-  const q = query(collection(db, `schools/${domain}/teachers`), where("name", "==", teacherName));
+  const q = query(collection(db, `schools/${domain}/docentes`), where("firstName", "==", searchName));
 
   const querySnapshot = await getDocs(q);
-  const resultsDiv = document.getElementById("teacherResults");
+  const resultsDiv = document.getElementById("docenteResults");
   resultsDiv.innerHTML = "";
 
   querySnapshot.forEach((doc) => {
-    const teacherData = doc.data();
-    resultsDiv.innerHTML += `<p>${teacherData.name}, ${teacherData.dob}, ${teacherData.curp}, ${teacherData.address}, ${teacherData.phone}, ${teacherData.professionalID}, ${teacherData.specialty}, ${teacherData.department}</p>`;
+    const docenteData = doc.data();
+    resultsDiv.innerHTML += `
+      <div class="docente-card">
+        <h3>${docenteData.firstName} ${docenteData.lastName} ${docenteData.secondLastName}</h3>
+        <p>ID: ${docenteData.id}</p>
+        <p>Fecha de Nacimiento: ${docenteData.dob}</p>
+        <p>CURP: ${docenteData.curp}</p>
+        <p>Dirección: ${docenteData.address}</p>
+        <p>Nacionalidad: ${docenteData.nationality}</p>
+        <p>Cédula Profesional: ${docenteData.cedula}</p>
+        <p>Contacto: ${docenteData.contact}</p>
+        <p>Especialidad: ${docenteData.especialidad}</p>
+        <button onclick="populateModifyForm('${docenteData.id}')">Modificar</button>
+      </div>
+    `;
   });
 
   if (querySnapshot.empty) {
@@ -102,68 +123,117 @@ document.getElementById("searchButton").addEventListener("click", async () => {
   }
 });
 
-// Función para eliminar un docente por nombre completo
-document.getElementById("deleteButton").addEventListener("click", async () => {
-  const teacherName = document.getElementById("deleteTeacherName").value;
+// Función para cargar la información de un docente en el formulario de modificación
+window.populateModifyForm = async function(docenteId) {
+  const user = auth.currentUser;
+  const domain = user.email.split("@")[1].split(".")[0];
+  const docenteDocRef = doc(db, `schools/${domain}/docentes/${docenteId}`);
+  const docenteDoc = await getDoc(docenteDocRef);
 
-  if (!teacherName) {
-    alert("Por favor, introduzca el nombre del docente a eliminar.");
+  if (docenteDoc.exists()) {
+    const docenteData = docenteDoc.data();
+    document.getElementById("modifyDocenteId").value = docenteId;
+    document.getElementById("modifyDocenteFirstName").value = docenteData.firstName;
+    document.getElementById("modifyDocenteLastName").value = docenteData.lastName;
+    document.getElementById("modifyDocenteSecondLastName").value = docenteData.secondLastName;
+    document.getElementById("modifyDocenteDOB").value = docenteData.dob;
+    document.getElementById("modifyDocenteCURP").value = docenteData.curp;
+    document.getElementById("modifyDocenteAddress").value = docenteData.address;
+    document.getElementById("modifyDocenteNationality").value = docenteData.nationality;
+    document.getElementById("modifyDocenteCedula").value = docenteData.cedula;
+    document.getElementById("modifyDocenteContact").value = docenteData.contact;
+    document.getElementById("modifyDocenteEspecialidad").value = docenteData.especialidad;
+  }
+}
+
+// Función para modificar la información de un docente
+document.getElementById("modifyDocenteForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const docenteId = document.getElementById("modifyDocenteId").value;
+  const docenteFirstName = document.getElementById("modifyDocenteFirstName").value;
+  const docenteLastName = document.getElementById("modifyDocenteLastName").value;
+  const docenteSecondLastName = document.getElementById("modifyDocenteSecondLastName").value;
+  const docenteDOB = document.getElementById("modifyDocenteDOB").value;
+  const docenteCURP = document.getElementById("modifyDocenteCURP").value;
+  const docenteAddress = document.getElementById("modifyDocenteAddress").value;
+  const docenteNationality = document.getElementById("modifyDocenteNationality").value;
+  const docenteCedula = document.getElementById("modifyDocenteCedula").value;
+  const docenteContact = document.getElementById("modifyDocenteContact").value;
+  const docenteEspecialidad = document.getElementById("modifyDocenteEspecialidad").value;
+
+  const user = auth.currentUser;
+  const domain = user.email.split("@")[1].split(".")[0];
+  const docenteRef = doc(db, `schools/${domain}/docentes/${docenteId}`);
+
+  await updateDoc(docenteRef, {
+    firstName: docenteFirstName,
+    lastName: docenteLastName,
+    secondLastName: docenteSecondLastName,
+    dob: docenteDOB,
+    curp: docenteCURP,
+    address: docenteAddress,
+    nationality: docenteNationality,
+    cedula: docenteCedula,
+    contact: docenteContact,
+    especialidad: docenteEspecialidad
+  });
+
+  alert("Información del docente actualizada exitosamente.");
+  document.getElementById("modifyDocenteForm").reset();
+  loadDocentes(); // Recargar la lista de docentes
+});
+
+// Función para eliminar un docente por ID
+document.getElementById("deleteButton").addEventListener("click", async () => {
+  const deleteId = document.getElementById("deleteDocenteId").value;
+
+  if (!deleteId) {
+    alert("Por favor, introduzca el ID del docente a eliminar.");
     return;
   }
 
   const user = auth.currentUser;
   const domain = user.email.split("@")[1].split(".")[0];
-  const q = query(collection(db, `schools/${domain}/teachers`), where("name", "==", teacherName));
+  const docenteDocRef = doc(db, `schools/${domain}/docentes/${deleteId}`);
+  const docenteDoc = await getDoc(docenteDocRef);
 
-  const querySnapshot = await getDocs(q);
-
-  if (querySnapshot.empty) {
-    alert("No se encontraron docentes con ese nombre.");
+  if (!docenteDoc.exists()) {
+    alert("No se encontraron docentes con ese ID.");
     return;
   }
 
-  querySnapshot.forEach(async (doc) => {
-    await deleteDoc(doc.ref);
-  });
-
+  await deleteDoc(docenteDocRef);
   alert("Docente eliminado exitosamente.");
-  loadTeachers(); // Recargar la lista de docentes
+  loadDocentes(); // Recargar la lista de docentes
 });
 
 // Función para cargar y mostrar todos los docentes
-async function loadTeachers() {
+async function loadDocentes() {
   const user = auth.currentUser;
   const domain = user.email.split("@")[1].split(".")[0];
-  const teachersCollection = collection(db, `schools/${domain}/teachers`);
-  const querySnapshot = await getDocs(teachersCollection);
+  const docentesCollection = collection(db, `schools/${domain}/docentes`);
+  const querySnapshot = await getDocs(docentesCollection);
 
-  const teachersTableBody = document.getElementById("teachersTable").querySelector("tbody");
-  teachersTableBody.innerHTML = "";
+  const docentesTableBody = document.getElementById("docentesTable").querySelector("tbody");
+  docentesTableBody.innerHTML = "";
 
   querySnapshot.forEach((doc) => {
-    const teacherData = doc.data();
+    const docenteData = doc.data();
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td>${teacherData.name}</td>
-      <td>${teacherData.dob}</td>
-      <td>${teacherData.curp}</td>
-      <td>${teacherData.address}</td>
-      <td>${teacherData.phone}</td>
-      <td>${teacherData.professionalID}</td>
-      <td>${teacherData.specialty}</td>
-      <td>${teacherData.department}</td>
+      <td>${docenteData.id}</td>
+      <td>${docenteData.firstName}</td>
+      <td>${docenteData.lastName}</td>
+      <td>${docenteData.secondLastName}</td>
+      <td>${docenteData.dob}</td>
+      <td>${docenteData.curp}</td>
+      <td>${docenteData.address}</td>
+      <td>${docenteData.nationality}</td>
+      <td>${docenteData.cedula}</td>
+      <td>${docenteData.contact}</td>
+      <td>${docenteData.especialidad}</td>
     `;
-    teachersTableBody.appendChild(row);
+    docentesTableBody.appendChild(row);
   });
-}
-
-// Función para cerrar sesión
-async function logout() {
-  try {
-    await signOut(auth);
-    window.location.href = "inicioDeSesion.html";
-  } catch (error) {
-    console.error("Error al cerrar sesión:", error);
-    alert("Error al cerrar sesión: " + error.message);
-  }
 }
